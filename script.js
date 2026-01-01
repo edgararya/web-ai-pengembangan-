@@ -121,14 +121,15 @@ async function fetchAIResponse(prompt, messageId) {
     let fullText = "";
 
     try {
-        // Use the configured API_URL
-        const response = await fetch(`${API_URL}/api/generate`, {
+        // Send to OUR Vercel Proxy (api/chat.js) instead of direct Ngrok
+        // We pass the "targetUrl" (Ollama URL) in the body
+        const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'ngrok-skip-browser-warning': 'true'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                targetUrl: API_URL, // Pass the user's Ngrok URL here
                 model: "deepseek-r1",
                 prompt: prompt,
                 stream: true
