@@ -24,8 +24,7 @@ export default async function handler(req) {
             headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': 'true',
-                'User-Agent': 'MyAI-Client/1.0',
-                'Origin': 'http://localhost:11434' // Cheat: Pretend we are localhost
+                'User-Agent': 'MyAI-Client/1.0'
             },
             body: JSON.stringify({
                 model: model,
