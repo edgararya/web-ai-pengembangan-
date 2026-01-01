@@ -3,6 +3,50 @@ const chatForm = document.getElementById('chat-form');
 const promptInput = document.getElementById('prompt-input');
 const sendBtn = document.getElementById('send-btn');
 
+// Settings Elements
+const settingsModal = document.getElementById('settings-modal');
+const settingsBtn = document.getElementById('settings-btn');
+const closeSettingsBtn = document.getElementById('close-settings');
+const saveSettingsBtn = document.getElementById('save-settings');
+const apiUrlInput = document.getElementById('api-url');
+
+// Default API URL (can be changed by user)
+let API_URL = localStorage.getItem('ollama_api_url') || 'https://uninnate-prideless-gaye.ngrok-free.dev';
+
+// --- Settings Logic ---
+settingsBtn.addEventListener('click', () => {
+    apiUrlInput.value = API_URL;
+    settingsModal.classList.add('active');
+});
+
+closeSettingsBtn.addEventListener('click', () => {
+    settingsModal.classList.remove('active');
+});
+
+saveSettingsBtn.addEventListener('click', () => {
+    let url = apiUrlInput.value.trim();
+    // Remove trailing slash if present
+    if (url.endsWith('/')) url = url.slice(0, -1);
+
+    // Auto-fix if user forgets /api/generate (actually we handle base URL)
+    // We assume user inputs BASE URL e.g. http://localhost:11434
+
+    if (url) {
+        API_URL = url;
+        localStorage.setItem('ollama_api_url', url);
+        alert('URL API Tersimpan!');
+        settingsModal.classList.remove('active');
+    }
+});
+
+// Close modal when clicking outside
+settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+        settingsModal.classList.remove('active');
+    }
+});
+// ----------------------
+
 // Auto-resize textarea
 promptInput.addEventListener('input', function () {
     this.style.height = 'auto';
@@ -77,7 +121,8 @@ async function fetchAIResponse(prompt, messageId) {
     let fullText = "";
 
     try {
-        const response = await fetch('http://localhost:11434/api/generate', {
+        // Use the configured API_URL
+        const response = await fetch(`${API_URL}/api/generate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -122,7 +167,7 @@ async function fetchAIResponse(prompt, messageId) {
         }
 
     } catch (error) {
-        aiContentDiv.innerHTML = `<span style="color: #ef4444;">Error: ${error.message}. Is Ollama running?</span>`;
+        aiContentDiv.innerHTML = `<span style="color: #ef4444;">Error: ${error.message}. <br>Check Settings URL (Ngrok) or is Ollama running?</span>`;
     }
 }
 
