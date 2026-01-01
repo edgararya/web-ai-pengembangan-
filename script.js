@@ -136,7 +136,10 @@ async function fetchAIResponse(prompt, messageId) {
             })
         });
 
-        if (!response.ok) throw new Error('Failed to connect to Ollama');
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`Server Error: ${response.status} ${errText}`);
+        }
 
         // Reset content (remove typing indicator)
         aiContentDiv.innerHTML = '';

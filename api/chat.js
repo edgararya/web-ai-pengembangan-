@@ -23,8 +23,8 @@ export default async function handler(req) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // This is the magic header to bypass Ngrok warning
-                'ngrok-skip-browser-warning': 'true'
+                'ngrok-skip-browser-warning': 'true',
+                'User-Agent': 'MyAI-Client/1.0' // Sometimes Ngrok blocks requests without User-Agent
             },
             body: JSON.stringify({
                 model: model,
