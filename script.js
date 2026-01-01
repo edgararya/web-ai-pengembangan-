@@ -124,7 +124,10 @@ async function fetchAIResponse(prompt, messageId) {
         // Use the configured API_URL
         const response = await fetch(`${API_URL}/api/generate`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            },
             body: JSON.stringify({
                 model: "deepseek-r1",
                 prompt: prompt,
