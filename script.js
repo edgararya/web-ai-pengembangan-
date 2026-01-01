@@ -146,17 +146,22 @@ async function fetchAIResponse(prompt, messageId) {
 
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
+        let buffer = '';
 
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
 
             const chunk = decoder.decode(value, { stream: true });
-            // Ollama sends JSON objects one by one in the stream
-            const lines = chunk.split('\n');
+            buffer += chunk;
+
+            // Split by newline
+            const lines = buffer.split('\n');
+            // The last item is potentially incomplete, so keep it in buffer
+            buffer = lines.pop();
 
             for (const line of lines) {
-                if (!line) continue;
+                if (!line.trim()) continue;
                 try {
                     const json = JSON.parse(line);
                     if (json.response) {
