@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Optional: Add an icon or font link here -->
+</head>
+
+<body>
+    <aside>
+        <div class="brand">MyAI</div>
+        <!-- Future history list could go here -->
+    </aside>
+
+    <main>
+        <div class="chat-container" id="chat-container">
+            <div class="welcome-message">
+                <h1>Halo, ada yang bisa dibantu?</h1>
+                <p>Tanyakan apa saja ke DeepSeek AI</p>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-container">
+                <form id="chat-form">
+                    <textarea id="prompt-input" placeholder="Kirim pesan..." rows="1" required></textarea>
+                    <button type="submit" id="send-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
